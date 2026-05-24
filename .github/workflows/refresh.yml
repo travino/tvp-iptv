@@ -15,15 +15,24 @@ jobs:
 
     steps:
       - name: Checkout repo
-        run: |
-          git clone "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" .
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
       - name: Generate playlists
         run: python3 generate.py
 
-      - name: Commit and push
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tvp.m3u tvp1.m3u tvp2.m3u tvpinfo.m3u tvpsport.m3u tvpkultura.m3u tvpdokument.m3u
-          git diff --cached --quiet || git commit -m "chore: refresh TVP streams [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          git push
+          git add *.m3u
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: refresh TVP streams [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git push
+          fi
