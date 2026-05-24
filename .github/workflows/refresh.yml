@@ -2,7 +2,7 @@ name: Refresh TVP M3U
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/10 * * * *"   # every 10 minutes
   workflow_dispatch:
 
 permissions:
@@ -17,29 +17,13 @@ jobs:
       - name: Checkout repo
         run: |
           git clone "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" .
-
       - name: Generate playlists
         run: python3 generate.py
 
       - name: Commit and push
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tvp.m3u tvp1.m3u tvp2.m3u tvpinfo.m3u tvpkultura.m3u tvpsport.m3u tvpdokument.m3u
-          git diff --cached --quiet || git commit -m "chore: refresh TVP streams [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          git push
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo "⚠️ No streams fetched - check API endpoints"
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "✓ Streams updated successfully"
-          fi
-
-      - name: Commit and push
-        if: steps.changes.outputs.has_changes == 'true'
-        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tvp.m3u tvp1.m3u tvp2.m3u tvpinfo.m3u tvpsport.m3u tvpdokument.m3u
-          git commit -m "chore: refresh TVP streams [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git add tvp.m3u tvp1.m3u tvp2.m3u tvpinfo.m3u tvpsport.m3u tvpkultura.m3u tvpdokument.m3u
+          git diff --cached --quiet || git commit -m "chore: refresh TVP streams [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push
