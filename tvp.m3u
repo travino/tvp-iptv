@@ -1,13 +1,5 @@
 #EXTM3U
-
-#EXTINF:-1 tvg-id="399697" tvg-name="TVP 1 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 1 HD
-https://rsdt-krk202-7.tvp.pl/token/video/live/51689486/20260524/1089244594/-Ze7YVCwRVnXgSYBKIRtUi0uUb5RPk0wH4YgP7UEXwq0qaNAixl2Y_NW4Py8I_H8eSzniN15MjCzqhbbJ-GPOGTtkPbXRbw-FXwJgdsnzAxa7Ec_0pJ1v6OYOSKRaOTIkZybXB7Waev0Bn0TQUr3kIHjLw2H5iVkhcauEB4lBho/156/master.m3u8
-
-#EXTINF:-1 tvg-id="399698" tvg-name="TVP 2 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 2 HD
-https://rsdt-krk203-9.tvp.pl/token/video/live/51696811/20260524/1089244594/VgHSzHp5k_0_jjU92fzoJcS0WKVUxLjbVvxEIr5vyA-zOR3nYSl38J1uBMNoOvzskvrUpq1iOP2Z4PWgE8STF3L7_CEOadl37CMx-BvaxC_r_S9AayKraYiW795ICPLpxcQP7pnv7qmoXOAqHo5r183th5nqRy1K6OcE1ifhugQ/156/master.m3u8
-
-#EXTINF:-1 tvg-id="399699" tvg-name="TVP Info" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Info
-https://rsdt-krk203-9.tvp.pl/token/video/live/51696820/20260524/1089244594/x4_8lXJyVmah-GwoLZxNHbLrRImiCexKEKOOeilNX2DFW9iVjbBhFFbH74Efm3i3EsxrwqDkoFU0HpB230wFmy2W6rGEQ4Q035OCCFCVpOT3k43ihjBj7TJy2uTzPyWWW1KuEDjgJRadyslJCL_O8LECbqqlC3Pi7iJRcJi7MU0/156/master.m3u8
-
-#EXTINF:-1 tvg-id="399700" tvg-name="TVP Sport" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Sport
-https://rsdt-krk203-9.tvp.pl/token/video/live/51696822/20260524/1089244594/2igvrmjIvY7qvFyxYoBgPRmQBo7605g9hYqUg5MMHUcakdL89efscZBVSlG-FDqUIYiXPJaLqp14kWYDS7rO8HFAZuN2OKlZJV9d7cVCPk6L4fx1DIJNuRUIl9g_JvMcgJh7JeYsvGc_sPZ-jk17IKJMgy6nU83N4P53y6HdQC0/156/master.m3u8
+#EXTINF:-1 tvg-name="TVP 1 HD" group-title="Polska",TVP 1 HD
+# Playlist not yet generated — wait for the GitHub Action to run (≤10 min)
+#EXTINF:-1 tvg-name="TVP 2 HD" group-title="Polska",TVP 2 HD
+# Playlist not yet generated — wait for the GitHub Action to run (≤10 min)
