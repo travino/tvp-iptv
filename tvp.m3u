@@ -1,5 +1,7 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="TVP 1 HD" group-title="Polska",TVP 1 HD
-# Playlist not yet generated — wait for the GitHub Action to run (≤10 min)
-#EXTINF:-1 tvg-name="TVP 2 HD" group-title="Polska",TVP 2 HD
-# Playlist not yet generated — wait for the GitHub Action to run (≤10 min)
+
+#EXTINF:-1 tvg-id="399697" tvg-name="TVP 1 HD" tvg-logo="https://s.tvp.pl/images/3/8/0/uid_3800ec3d7a9b6fa4517f2a1d4f5cd6b9_width_130_gs_0.png" group-title="Polska",TVP 1 HD
+https://rsdt-krk201-5.tvp.pl/token/video/live/51689486/20260524/2896952988/PdhxoTMZaecoAWFqoz8-apsFKL37k_EhADIalmZeE0_9XLAuIQaSVA_vnXEqW-gZGKtsdr9aI_r3aWyYD813WTdr50UpSJRNDtaE7_TWQu7L-Zr6i-6SavhXjx9ocAj4NKRx3YZ0jnlLRikH_4brqnZioFh04Bv3nNDKAB2isyM/156/master.m3u8
+
+#EXTINF:-1 tvg-id="399698" tvg-name="TVP 2 HD" tvg-logo="https://s.tvp.pl/images/6/7/d/uid_67d7cfe9dd3e5ee8dbb47e2f98eb1e4f_width_130_gs_0.png" group-title="Polska",TVP 2 HD
+https://rsdt-krk202-7.tvp.pl/token/video/live/51696811/20260524/2896952988/CVe0FNKs3U9EGwj0XZlzLhd92iq7Aeq6L-L6in5_Bke2gEtb4gjubKiNxtbpLA5yJTRdVW39rZZJDvP-OWl_3YfgRur8LpoyOwK5Tif6vImqi_a48jXCno8EHXpCzYdOU0xyJUvVkWXR7ZZ4FmrMS4lD_Yn8rB9sCzPErEcNDfE/156/master.m3u8
