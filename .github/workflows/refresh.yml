@@ -24,8 +24,6 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v6.0.2
-        run: |
-          git clone "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" .
 
       - name: Generate playlists
         run: python3 generate.py
