@@ -1,19 +1,19 @@
 #EXTM3U
 
 #EXTINF:-1 tvg-id="399697" tvg-name="TVP 1 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 1 HD
-https://rsdt-krk201-5.tvp.pl/token/video/live/51689486/20260525/2441372858/wTnpQOb96VO8kOr0_7_22OWyR5wzAzUoUy3wajQFGNd0mmlljE1DlFg33o0Mglbz5aNg55MeFat2u96BpxQ5Dyut01ztgCLxPRnktanI4peZaZewhSJY4Z1DSkjg6UZCBqn2k5URRs5FEk114hzjA0PA0atXNEl7y7BgZI1PEms/156/master.m3u8
+https://rsdt-krk202-7.tvp.pl/token/video/live/51689486/20260525/2899825268/9oFMAmNDGShvZ85BDixXlBAmI8OuvGdZR0GIWH5iSZ46gFjHjLJvrk7_r5y94JHgUCCK1iYltnLo6do-dOP19Vrl8EUoLgROPz47U1Z62qwEOBHG49Q94flUaT1XQWg2gGVj0OaYIQPrGuKM2CsXebp9P3YgQrf3mv-EECY38MQ/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399698" tvg-name="TVP 2 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 2 HD
-https://rsdt-krk203-9.tvp.pl/token/video/live/51696811/20260525/2441372858/Mt2F8OIrJejhaIMnL758Z3wkapiEm8DHcsCOwIyzJVF58c9grJHo-a_cxXAKF_upEYGuCVNokUfRspax0T9svzFgI9EOSphznTkcdxAbCJXTUayC4YbhSLVzYSqNVXNPGT14J6AgYE6G-tCUDayyQLrEYY4KnFpdzJABcqLG3nw/156/master.m3u8
+https://rsdt-krk202-7.tvp.pl/token/video/live/51696811/20260525/2899825268/Zn4v47bsDdkpHtbAuSbcoYZOKYtWnD4a7ReBAVZSigKZiLJHv_-NwHbNtmv9wRgEeo_uLyWtMGANBqiaf7s7uSk5MUi6piIQEUrm_B-2u0UzhVE5TYAzjEprsi2iSibvwzqZMV8UiufqwkmvdBsGKHtI2jjEBn2uDozlcnONHbA/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399699" tvg-name="TVP Info" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Info
-https://rsdt-krk202-7.tvp.pl/token/video/live/51696820/20260525/2441372858/7i5F6qc4CqA6QPy8oj6FRKzm4bstqb6S9ERzW1Mcx6dGoMubHI__IZBvGXbCtltCp9Gvq1qT59px1WNy0hf4piqRbm9ciL_uveSGhx8Motwv1BUOZY_4taFOmazZiuZOeXqFmDYWYH_2WA_cZZYfBos0M0LqNS7MksRJkjW4XA0/156/master.m3u8
+https://rsdt-krk202-7.tvp.pl/token/video/live/51696820/20260525/2899825268/jLkIXCn3ZjkSRJmjrr0fJV4D8mLHIt6aYGYimpicswqX2iwrtSzlTZs18-V1N1JkoYwh1Gwy_7G4eKJWlfFpxOWIhmVBi2dd4WydhUb1YpkmM4Nz2bFlXYv1bm89aH-kSoFlWvCJsH3tVQujfYEx2tQb4sCGTlQDOP2AX_-X_dQ/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399700" tvg-name="TVP Kultura" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Kultura
-https://rsdt-krk202-7.tvp.pl/token/video/live/51696822/20260525/2441372858/kGaFXsBVmlHDTpNX3IGk2wfLKNsLlp3iXpZdeybThSbomVGHwsOFfr-2LGgglAsekYAalfndyS9-qrPzmOIB3rOGY5p3FHQ-7ngKntw7hyK-rhSLDFynYgqM71gIU01GdItW2eoOVVfkjtKF7vMVxKvo082wNKVCBLKwnV8RIqU/156/master.m3u8
+https://rsdt-krk203-9.tvp.pl/token/video/live/51696822/20260525/2899825268/XnDnWDprwg0Gp8grXycetJTlrd8p5q8cUl_ibkXPpSTEMjmzcZDSYgPA81884HzXSVkcff_40SUTYrhd_YO5MjcifUE91q7pYEelD4muF5oxRIbdL1PpH7CQf56QVrbNvC4xySP5FqW3bK098-NbmctMQPAi8Qb15oz9lDgUIus/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399702" tvg-name="TVP Sport" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Sport
-https://rsdt-krk203-9.tvp.pl/token/video/live/51696827/20260525/2441372858/8DPz713yEDvhYtMzlHtYzAdgE7u9aQKMG6J49PWt-cykH2vvcSAHHCw8YabvN2dEXiKEcOpBV5TuTXeoXe_toXv3vr_qkYhQgbPZkfmailFT8fXuMMgOvaXwAVynUU9scOisjsZVbpaKdL0IzE5rNfeTH6sNFD1S3Z8D7r6ayOs/156/master.m3u8
+https://rsdt-krk201-5.tvp.pl/token/video/live/51696827/20260525/2899825268/Zw2JEm3YXhoJ8QGcehpFmJd3D2SjVaiDyxV0hJgR7n8QHKPE7R5UmJ9ZyJqh_DqgcSxtL0nDVAD_f00X1SouUJ-Ki0JoTBm6KKclrwo3NfpfoIZoCr1zZPSdJ6DkZVy6imuM7CuvPqMIMJJFVZipiGIsNFPVyFo-9vMv5cs-QvI/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399721" tvg-name="TVP Dokument" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Dokument
-https://rsdt-krk202-7.tvp.pl/token/video/live/53795159/20260525/2441372858/t6Vrcu4ZX3bzZtkcejgr-XnxqcnlNY1_s69A4q9cfmDSNLJ1-KB_qEO_gNlPVe5r3Ps1FahDo2JzUOouunHYYYSP_7_8JbhEMN6bOLD_wgjwM1RS1PUavU64rBNTlxS2ZHHgMWRhvDvGQn8O4Dp1MLt9kXPyW005NcF0cBA8wn8/156/master.m3u8
+https://rsdt-krk202-7.tvp.pl/token/video/live/53795159/20260525/2899825268/Jq74OKDGHhXoSUgmjJMvhTL7ZtfnT9cBq-BR4usskMo9nqxt03n8Bdg-l2RC4dmUGX1-QEsdJJotxwYFEAS4CMYei3NjOTAgT2a0dtuKh3EmdC57gmnTfSHW2-MWOQ7SpHjcKV6acI7_1xFV6JaK4PH977iH7cdYqEDBJogJr4M/156/master.m3u8
