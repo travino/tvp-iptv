@@ -39,7 +39,7 @@ CHANNELS = [
         "group": "Polska",
     },
     {
-        "id":    "399701",
+        "id":    "399702",
         "slug":  "tvpsport",
         "name":  "TVP Sport",
         "logo":  "https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png",
