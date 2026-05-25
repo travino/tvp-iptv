@@ -1,19 +1,19 @@
 #EXTM3U
 
 #EXTINF:-1 tvg-id="399697" tvg-name="TVP 1 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 1 HD
-https://rsdt-krk201-5.tvp.pl/token/video/live/51689486/20260525/2896975808/_MkmRSSQY07LPMoMiFSD9HST-AQzZ8kfIUQYiVcednLL4-8OBVTd1KPojXyT5soG3Wqrxep1vuGI8dWR7OSolqDDoExHjzTCYOuXaSNQsWj7RpAmg4ilLqdWlpeyOHXayJcHViQA1TGuz62hKl0whsaaQQcVHyM5tJUwbWTZvbE/156/master.m3u8
+https://rsdt-krk201-5.tvp.pl/token/video/live/51689486/20260525/342550337/TNnUtAGZMtgUQyQ0gtQvd9Sn_i17UecMH_aMpGzy2-WSPbLjQPWdGtafbx44efHzuVzjkUlscfhdsDD3S9zwdmlei6PM46CMRCuhd5HdK30qmpDkjRIcChVniyqXJ8uLOIrlvNaCR__9EZ4x13yQnVA8iUPtZ8tJm02K9We0aS4/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399698" tvg-name="TVP 2 HD" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP 2 HD
-https://rsdt-krk202-7.tvp.pl/token/video/live/51696811/20260525/2896975808/nnRYTU-nG3qaYIrRNmH9OIaIxQvYV_OW0gC6KoBTadhdCZIr6J4b3lEgmF5ictBLlug1Q8bW4thfLjDgqJ1aSKFjCmywI44XPwq7BqxCUIen3_yzxWzNJQKBAbHvjWWpzXUe0FLxf9k5s91f9EW-Ex9nIAp5OoH16TAn615MT7Y/156/master.m3u8
+https://rsdt-krk201-5.tvp.pl/token/video/live/51696811/20260525/342550337/w75tzFCMLaEdzpbNIrMOtK0HUV-L0TNg3t2JTYDePNsLwkyAsRvDFWPFTLo8P6xVa3E47K9lOU1Ks8PIAtyMjM9V-YcxL0hdS1_yZ0uFF36Idd4pGReUtFnWWS6vPdJSLTsgCgQ2-KWAVa9MvhP0AGB-8AlQB4v1yZiHWRDf0oI/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399699" tvg-name="TVP Info" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Info
-https://rsdt-krk202-7.tvp.pl/token/video/live/51696820/20260525/2896975808/2AHFnAN1qkh_bGN1UIqKYdZVg1MuM_Tj7zDDLcAh-LNCetGWNnlWx9P8DQcfT7pJ1Nq9cK7WEFlP2mgfKcCzdTeetogLZ8RxZIuW1SCoTDK9O42D8iw-ZKHo6qtsCbOg1o4xl3sVq7JAItzQKVAgtwtZxcd_XaDok0iDEBPPXTw/156/master.m3u8
+https://rsdt-krk201-5.tvp.pl/token/video/live/51696820/20260525/342550337/prDj2UlnI9kLl57Z3GwzqnWx-VvDwe2fN_Ac-OdjAjj8zNo_ejMYvNCCeTaEQ50SUt1512lR_ZWGpN2krO0lfh9zebJcQ5Q5_WSIEN_UkvgWqhvH05XGv1G9p_1J_gSNzcS0CgjuTeaGiK1UAgd2_VwkcG9Taek_BIot5FsuLg0/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399700" tvg-name="TVP Kultura" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Kultura
-https://rsdt-krk201-5.tvp.pl/token/video/live/51696822/20260525/2896975808/qBxF4sQSWxkgBZLgt8q0yPBTDfIbq5SZESqg4O2FcXskfGirMea1Ou1CcykpOMnwHq1sdDUBQlZiS0HRxn60Sc-8ngOX-9T5G-qOCvNzLx5oUPkitW9vggFwwbeKt32CYGbl7f7LbCXKRc_npd-Ij5ZU-JQNEyWco6IgNu3538Q/156/master.m3u8
+https://rsdt-krk202-7.tvp.pl/token/video/live/51696822/20260525/342550337/qtGztFro3V85RvLRmdExqLHhIrx0tPsiilZWlk0j5qPiBNqEeAD2EggP4jWO0O91Jb9yoTvgbYolaMuGsv7ImenTgFcqsbiHCa-f7OuiAlyMbW2llBEhZ1viMNp-J3Je0P_LDfzLJl2CgIDjh7g_Dz0FVMPk1RqsNlsW3euBdBY/156/master.m3u8
 
-#EXTINF:-1 tvg-id="399701" tvg-name="TVP Sport" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Sport
-https://rsdt-krk201-5.tvp.pl/token/video/live/53795158/20260525/2896975808/gp1O-W_FshPMtfBf9beMz4WMBIhZzybxb6rIE8o-B5DMVtklHe3ah4uwgfnzpbSJYtKAuE13xmZ1qdhaQEtpuJOW1cCLtMBzN8szapeOOlWIUudzrJPa_mUgsumjpVtdu4q4QcxVOZwOcmdz7HqBEXOpPonMWct0siGx7QMtyRo/156/master.m3u8
+#EXTINF:-1 tvg-id="399702" tvg-name="TVP Sport" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Sport
+https://rsdt-krk202-7.tvp.pl/token/video/live/51696827/20260525/342550337/AFoeHG_T55Z4ARJ9xEzs79pTiiquvGzeFag7TP--DoUWku6tE-iknkHBSei3WteYodU64eZzaUyIi4ZfWkRyaA8uExDD06xOdxYfQzqdakafaPgdivU5yjRjCvVjq9B6Kv0vnbbXNd26x1timu-49xfIA5ZoCSkaNVDupQqnPDo/156/master.m3u8
 
 #EXTINF:-1 tvg-id="399721" tvg-name="TVP Dokument" tvg-logo="https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png" group-title="Polska",TVP Dokument
-https://rsdt-krk201-5.tvp.pl/token/video/live/53795159/20260525/2896975808/Pf9VfBFCoEKdqr-PCR3L6OYf2ekpxiQiXkXi-3z7nbJqesZViY80gIUb39q6PGdPXmyeand0PPlPgXAjcVZJCL-kNC7plNC26NolOsgvXk4dIh-2uJnJHpeHH6m1cejoZ4KT4kkVkBHDRoITW6VQhEz4j9yCPF1Ravmwa3dKRmg/156/master.m3u8
+https://rsdt-krk201-5.tvp.pl/token/video/live/53795159/20260525/342550337/kDqtpjOJalHqn6LtU5zppVFchTXts-k4fAOUBdDI-jE4PavUck_V2TaR1Grr5hDwVoZJ0PiJ5IRdpM6P7lR7i4Ib0DiHE5eo1H30zaGWFblOWdje_icBfskRs8mITNk5MIFjmj1gEcvb8a7-SiCR-b7i76a6tzSqD39wskb1M4o/156/master.m3u8
