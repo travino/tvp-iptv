@@ -2,7 +2,7 @@
 """
 TVP M3U generator — runs in GitHub Actions
 Writes one combined tvp.m3u AND one file per channel:
-  tvp1.m3u, tvp2.m3u, tvpinfo.m3u, tvpsport.m3u
+  tvp1.m3u, tvp2.m3u, tvpinfo.m3u, tvpkultura.m3u, tvpdokument.m3u, tvpsport.m3u
 """
 
 import json
@@ -33,8 +33,22 @@ CHANNELS = [
     },
     {
         "id":    "399700",
+        "slug":  "tvpkultura",
+        "name":  "TVP Kultura",
+        "logo":  "https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png",
+        "group": "Polska",
+    },
+    {
+        "id":    "399701",
         "slug":  "tvpsport",
         "name":  "TVP Sport",
+        "logo":  "https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png",
+        "group": "Polska",
+    },
+    {
+        "id":    "399721",
+        "slug":  "tvpdokument",
+        "name":  "TVP Dokument",
         "logo":  "https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png",
         "group": "Polska",
     },
@@ -52,7 +66,7 @@ HEADERS = {
         "Chrome/124.0.0.0 Safari/537.36"
     ),
     "Referer": "https://vod.tvp.pl/",
-    "Accept":  "application/json, */*",
+    "Accept": "application/json, */*",
 }
 
 
@@ -80,7 +94,6 @@ def extinf(ch):
 
 
 def write_m3u(filename, entries):
-    """entries = list of (ch, stream_url)"""
     lines = ["#EXTM3U"]
     for ch, url in entries:
         lines.append(f"{extinf(ch)}\n{url}")
@@ -90,7 +103,7 @@ def write_m3u(filename, entries):
 
 
 def main():
-    ok_entries = []   # (ch, url) for the combined file
+    ok_entries = []
 
     for ch in CHANNELS:
         print(f"Fetching {ch['name']} (id={ch['id']}) …", file=sys.stderr)
@@ -99,15 +112,12 @@ def main():
         if url:
             print(f"  ✓ {url[:80]}…", file=sys.stderr)
             ok_entries.append((ch, url))
-            # Per-channel file
             write_m3u(f"{ch['slug']}.m3u", [(ch, url)])
         else:
             print(f"  ✗ skipped — writing placeholder", file=sys.stderr)
-            # Write a placeholder so the file always exists in the repo
             with open(f"{ch['slug']}.m3u", "w", encoding="utf-8") as f:
                 f.write(f"#EXTM3U\n# {ch['name']} stream unavailable — will retry next run\n")
 
-    # Combined file
     write_m3u("tvp.m3u", ok_entries)
 
     print(f"\nDone: {len(ok_entries)}/{len(CHANNELS)} streams fetched.", file=sys.stderr)
