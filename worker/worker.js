@@ -264,7 +264,7 @@ export default {
     const path = new URL(request.url).pathname.replace(/\/$/, "") || "/";
 
     let targets;
-    if (path === "/" || path === "/tvp.m3u") {
+    if (path === "/" || path === "/playlist.m3u") {
       targets = ALL_CHANNELS;
     } else {
       const slug = path.replace(/^\//, "").replace(/\.m3u$/, "");
@@ -272,7 +272,7 @@ export default {
       if (!ch) {
         return new Response(
           "Not found.\n\nAvailable:\n" +
-            ["/tvp.m3u", ...ALL_CHANNELS.map((c) => `/${c.slug}.m3u`)].join("\n") +
+            ["/playlist.m3u", ...ALL_CHANNELS.map((c) => `/${c.slug}.m3u`)].join("\n") +
             "\n",
           { status: 404 }
         );
