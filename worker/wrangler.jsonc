@@ -34,6 +34,7 @@
 	/**
 	 * https://developers.cloudflare.com/workflows/
 	 */
+/** 
 	"workflows": [
 		{
 			"name": "my-workflow",
@@ -41,4 +42,5 @@
 			"class_name": "MyWorkflow"
 		}
 	]
+*/
 }
