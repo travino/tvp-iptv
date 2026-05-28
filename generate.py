@@ -154,22 +154,34 @@ def get_tvp_stream_url(channel_id):
 # yt-dlp helper — extracts the best HLS URL from a YouTube live stream
 # ---------------------------------------------------------------------------
 
+# Optional Netscape-format cookies file. The workflow writes this from the
+# YT_COOKIES repo secret to get past YouTube's bot-wall on datacenter IPs.
+# Absent locally / when no secret is set → yt-dlp runs without it.
+YT_COOKIES_FILE = "cookies.txt"
+
+
 def get_youtube_stream_url(yt_url):
     """
     Calls yt-dlp to extract the best HLS manifest URL for a live stream.
     Returns the URL string on success, None on failure.
 
-    yt-dlp must be installed:  pip install yt-dlp
+    yt-dlp must be installed:  pip install "yt-dlp[default]"  (the [default]
+    extra pulls in yt-dlp-ejs, which is needed alongside a JS runtime like
+    Deno for YouTube extraction on yt-dlp ≥ 2025.11.12).
     """
+    cmd = [
+        "yt-dlp",
+        "--get-url",
+        "-f", "best[protocol=m3u8_native]/best[ext=m3u8]/best",
+        "--no-playlist",
+    ]
+    if os.path.exists(YT_COOKIES_FILE):
+        cmd += ["--cookies", YT_COOKIES_FILE]
+    cmd.append(yt_url)
+
     try:
         result = subprocess.run(
-            [
-                "yt-dlp",
-                "--get-url",
-                "-f", "best[protocol=m3u8_native]/best[ext=m3u8]/best",
-                "--no-playlist",
-                yt_url,
-            ],
+            cmd,
             capture_output=True,
             text=True,
             timeout=60,
