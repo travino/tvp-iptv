@@ -1,16 +1,14 @@
 /**
- * TVP + YouTube Live Stream Worker
+ * TVP Live Stream Worker
  * Deploy to Cloudflare Workers (free tier: 100k req/day)
  *
  * Routes:
  *   /playlist.m3u    → all channels combined
  *   /tvp1.m3u … /tvphistoria.m3u → individual TVP channels
- *   /wpolsce24.m3u   → wPolsce24 (via YouTube live)
- *   /republika.m3u   → Telewizja Republika (via YouTube live)
  *
  * Resolution strategy (per channel):
  *   L1  Cache API           — fast, but PER-COLO (cron only warms one colo)
- *   L2  live source fetch   — TVP API / YouTube, now bounded by LIVE_TIMEOUT_MS
+ *   L2  live source fetch   — TVP API, bounded by LIVE_TIMEOUT_MS
  *   L3a KV (env.LKG)        — GLOBAL last-known-good, written on every success
  *   L3b raw GitHub file     — committed playlist, refreshed ~15 min by Actions
  *
@@ -29,7 +27,7 @@
 
 const TVP_LOGO = "https://s.tvp.pl/files/tvp.pl/images/vod-logo-header.png";
 
-const TVP_CHANNELS = [
+const CHANNELS = [
   { id: "399697", slug: "tvp1",        name: "TVP 1 HD",     logo: TVP_LOGO, group: "Polska" },
   { id: "399698", slug: "tvp2",        name: "TVP 2 HD",     logo: TVP_LOGO, group: "Polska" },
   { id: "399699", slug: "tvpinfo",     name: "TVP Info",     logo: TVP_LOGO, group: "Polska" },
@@ -40,25 +38,6 @@ const TVP_CHANNELS = [
   { id: "399724", slug: "tvprozrywka", name: "TVP Rozrywka", logo: TVP_LOGO, group: "Polska" },
   { id: "399703", slug: "tvphistoria", name: "TVP Historia", logo: TVP_LOGO, group: "Polska" },
 ];
-
-const YOUTUBE_CHANNELS = [
-  {
-    slug:    "wpolsce24",
-    name:    "wPolsce24",
-    logo:    "https://wpolsce24.tv/favicon.ico",
-    group:   "Polska",
-    liveUrl: "https://www.youtube.com/@TelewizjawPolsce24/live",
-  },
-  {
-    slug:    "republika",
-    name:    "Telewizja Republika",
-    logo:    "https://tvrepublika.pl/favicon.ico",
-    group:   "Polska",
-    liveUrl: "https://www.youtube.com/@Telewizja_Republika/live",
-  },
-];
-
-const ALL_CHANNELS = [...TVP_CHANNELS, ...YOUTUBE_CHANNELS];
 
 // ---------------------------------------------------------------------------
 // Config
@@ -118,13 +97,13 @@ async function withRetry(label, fn, attempts = RETRY_ATTEMPTS) {
   return null;
 }
 
-// Stable label for a channel's source, e.g. "tvp:tvp2" / "yt:republika".
+// Stable label for a channel's source, e.g. "tvp:tvp2".
 function sourceLabel(ch) {
-  return `${ch.id ? "tvp" : "yt"}:${ch.slug}`;
+  return `tvp:${ch.slug}`;
 }
 
 // ---------------------------------------------------------------------------
-// TVP API
+// TVP API (L2)
 // ---------------------------------------------------------------------------
 
 const TVP_API_URL =
@@ -148,83 +127,6 @@ async function fetchTvpStreamUrl(channelId) {
   if (!res.ok) return null;
   const data = await res.json();
   return data?.sources?.HLS?.[0]?.src ?? null;
-}
-
-// ---------------------------------------------------------------------------
-// YouTube
-// ---------------------------------------------------------------------------
-
-const YT_HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-  "Accept-Language": "en-US,en;q=0.9",
-};
-
-async function resolveLiveVideoId(liveUrl) {
-  const res = await fetch(liveUrl, {
-    headers: YT_HEADERS,
-    signal: AbortSignal.timeout(LIVE_TIMEOUT_MS),
-  });
-  if (!res.ok) return null;
-  const html = await res.text();
-  const patterns = [
-    /"videoId":"([\w-]{11})"/,
-    /<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([\w-]{11})">/,
-    /watch\?v=([\w-]{11})/,
-  ];
-  for (const re of patterns) {
-    const m = html.match(re);
-    if (m) return m[1];
-  }
-  return null;
-}
-
-async function fetchYouTubeStreamUrl(videoId) {
-  const body = JSON.stringify({
-    context: {
-      client: { clientName: "WEB", clientVersion: "2.20240101.00.00", hl: "en" },
-    },
-    videoId,
-  });
-  const res = await fetch(
-    "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": YT_HEADERS["User-Agent"],
-        "X-YouTube-Client-Name": "1",
-        "X-YouTube-Client-Version": "2.20240101.00.00",
-      },
-      body,
-      signal: AbortSignal.timeout(LIVE_TIMEOUT_MS),
-    }
-  );
-  if (!res.ok) return null;
-  const data = await res.json();
-  const hlsUrl = data?.streamingData?.hlsManifestUrl;
-  if (hlsUrl) return hlsUrl;
-  const formats = data?.streamingData?.adaptiveFormats ?? [];
-  const m3u8 = formats.find(
-    (f) => f.url && (f.mimeType?.includes("x-mpegURL") || f.url.includes(".m3u8"))
-  );
-  return m3u8?.url ?? null;
-}
-
-async function fetchYouTubeChannelStreamUrl(liveUrl) {
-  const videoId = await resolveLiveVideoId(liveUrl);
-  if (!videoId) return null;
-  return fetchYouTubeStreamUrl(videoId);
-}
-
-// ---------------------------------------------------------------------------
-// Unified live resolver (L2)
-// ---------------------------------------------------------------------------
-
-async function fetchStreamUrlFromSource(ch) {
-  if (ch.id) return fetchTvpStreamUrl(ch.id);
-  if (ch.liveUrl) return fetchYouTubeChannelStreamUrl(ch.liveUrl);
-  return null;
 }
 
 // ---------------------------------------------------------------------------
@@ -289,18 +191,25 @@ async function fetchRawGithubUrl(slug) {
 
 // ---------------------------------------------------------------------------
 // Resolve: L1 → L2 → L3a → L3b
+//
+// `ctx` is optional: when supplied, the cache/KV writes are deferred with
+// waitUntil so they don't add latency to the response the viewer is waiting on.
 // ---------------------------------------------------------------------------
 
-async function getStreamUrl(ch, env) {
+async function getStreamUrl(ch, env, ctx) {
   // L1: warm per-colo cache
   const cached = await readFromCache(ch.slug);
   if (cached) return { url: cached, source: "cache" };
 
   // L2: live source (bounded per attempt, retried)
-  const live = await withRetry(sourceLabel(ch), () => fetchStreamUrlFromSource(ch));
+  const live = await withRetry(sourceLabel(ch), () => fetchTvpStreamUrl(ch.id));
   if (live) {
-    await writeToCache(ch.slug, live);
-    await writeToKV(env, ch.slug, live);
+    const persist = Promise.all([
+      writeToCache(ch.slug, live),
+      writeToKV(env, ch.slug, live),
+    ]);
+    if (ctx?.waitUntil) ctx.waitUntil(persist);
+    else await persist;
     return { url: live, source: "live" };
   }
 
@@ -321,9 +230,9 @@ async function getStreamUrl(ch, env) {
 
 async function refreshAllStreams(env) {
   const results = await Promise.all(
-    ALL_CHANNELS.map(async (ch) => {
+    CHANNELS.map(async (ch) => {
       const label = sourceLabel(ch);
-      const url = await withRetry(label, () => fetchStreamUrlFromSource(ch));
+      const url = await withRetry(label, () => fetchTvpStreamUrl(ch.id));
       if (url) {
         await writeToCache(ch.slug, url);
         await writeToKV(env, ch.slug, url);
@@ -335,7 +244,7 @@ async function refreshAllStreams(env) {
     })
   );
   const ok = results.filter(Boolean).length;
-  log("info", { msg: "cron refresh complete", ok, total: ALL_CHANNELS.length });
+  log("info", { msg: "cron refresh complete", ok, total: CHANNELS.length });
 }
 
 // ---------------------------------------------------------------------------
@@ -364,14 +273,14 @@ export default {
 
     let targets;
     if (path === "/" || path === "/playlist.m3u") {
-      targets = ALL_CHANNELS;
+      targets = CHANNELS;
     } else {
       const slug = path.replace(/^\//, "").replace(/\.m3u$/, "");
-      const ch = ALL_CHANNELS.find((c) => c.slug === slug);
+      const ch = CHANNELS.find((c) => c.slug === slug);
       if (!ch) {
         return new Response(
           "Not found.\n\nAvailable:\n" +
-            ["/playlist.m3u", ...ALL_CHANNELS.map((c) => `/${c.slug}.m3u`)].join("\n") +
+            ["/playlist.m3u", ...CHANNELS.map((c) => `/${c.slug}.m3u`)].join("\n") +
             "\n",
           { status: 404 }
         );
@@ -381,7 +290,7 @@ export default {
 
     const results = await Promise.all(
       targets.map(async (ch) => {
-        const { url, source } = await getStreamUrl(ch, env);
+        const { url, source } = await getStreamUrl(ch, env, ctx);
         return { ch, url, source };
       })
     );
