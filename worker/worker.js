@@ -9,13 +9,20 @@
  * Resolution strategy (per channel):
  *   L1  Cache API           — fast, but PER-COLO (cron only warms one colo)
  *   L2  live source fetch   — TVP API, bounded by LIVE_TIMEOUT_MS
- *   L3a KV (env.LKG)        — GLOBAL last-known-good, written on every success
+ *   L3a KV (env.LKG)        — GLOBAL last-known-good, written by the CRON only
  *   L3b raw GitHub file     — committed playlist, refreshed ~15 min by Actions
  *
  * Why L3 exists: caches.default is per-data-center. The scheduled() cron warms
  * the cache in ONE colo, so a viewer routed through a cold colo (e.g. KUL) hits
  * the live path — and if vod.tvp.pl is slow/blocked from that egress, the old
  * code returned 503 after a ~24s hang. The durable fallbacks below remove that.
+ *
+ * KV WRITE POLICY: KV is written ONLY by the scheduled() cron, never on the
+ * request path. The free tier allows just 1,000 KV writes/day; writing on every
+ * live resolve burned through that in hours (per-colo cache expires every
+ * CACHE_TTL seconds, so each colo re-fetches+rewrote ~144×/channel/day). With
+ * cron-only writes the daily total is cron_runs × CHANNELS — keep the cron at
+ * ~30 min so 48 × 9 = 432 writes/day stays well under the cap.
  *
  * KV is OPTIONAL: bind a KV namespace as `LKG` and it's used automatically.
  * Without it, L3b (raw GitHub) still provides a global fallback.
@@ -56,9 +63,9 @@ const LIVE_TIMEOUT_MS = 7000;
 // vod.tvp.pl is unreachable from a given colo).
 const RAW_BASE = "https://raw.githubusercontent.com/travino/tvpi/main/streams/";
 
-// KV time-to-live for last-known-good entries. Refreshed on every successful
-// resolve, so in normal traffic this is effectively always fresh. Generous so
-// it survives a short upstream outage.
+// KV time-to-live for last-known-good entries. Refreshed by the cron, so it is
+// kept fresh on the cron cadence. Generous so it survives a short upstream
+// outage between cron runs.
 const KV_TTL = 1800; // seconds (30 min)
 
 // Number of attempts per live source fetch before giving up to a fallback.
@@ -152,6 +159,10 @@ async function writeToCache(slug, url) {
 
 // ---------------------------------------------------------------------------
 // L3a — KV global last-known-good (optional; only if env.LKG is bound)
+//
+// READ on the request path (cheap: 100k reads/day free).
+// WRITE only from the cron (see refreshAllStreams) — the request path must
+// never write KV or it will exhaust the 1,000 writes/day free-tier cap.
 // ---------------------------------------------------------------------------
 
 async function readFromKV(env, slug) {
@@ -192,8 +203,11 @@ async function fetchRawGithubUrl(slug) {
 // ---------------------------------------------------------------------------
 // Resolve: L1 → L2 → L3a → L3b
 //
-// `ctx` is optional: when supplied, the cache/KV writes are deferred with
-// waitUntil so they don't add latency to the response the viewer is waiting on.
+// `ctx` is optional: when supplied, the cache write is deferred with
+// waitUntil so it doesn't add latency to the response the viewer is waiting on.
+//
+// NOTE: the request path writes only the per-colo cache (L1). KV is NOT written
+// here — keeping the global LKG fresh is the cron's job. See refreshAllStreams.
 // ---------------------------------------------------------------------------
 
 async function getStreamUrl(ch, env, ctx) {
@@ -204,16 +218,13 @@ async function getStreamUrl(ch, env, ctx) {
   // L2: live source (bounded per attempt, retried)
   const live = await withRetry(sourceLabel(ch), () => fetchTvpStreamUrl(ch.id));
   if (live) {
-    const persist = Promise.all([
-      writeToCache(ch.slug, live),
-      writeToKV(env, ch.slug, live),
-    ]);
+    const persist = writeToCache(ch.slug, live); // cache only — no KV write here
     if (ctx?.waitUntil) ctx.waitUntil(persist);
     else await persist;
     return { url: live, source: "live" };
   }
 
-  // L3a: global last-known-good in KV
+  // L3a: global last-known-good in KV (read-only on the request path)
   const kv = await readFromKV(env, ch.slug);
   if (kv) return { url: kv, source: "kv" };
 
@@ -226,6 +237,10 @@ async function getStreamUrl(ch, env, ctx) {
 
 // ---------------------------------------------------------------------------
 // Pre-cache all channels (cron) — also seeds KV globally
+//
+// This is the ONLY place KV is written. Daily KV writes ≈ cron_runs × CHANNELS,
+// so keep the cron trigger at ~30 min (48 runs × 9 = 432 writes/day) to stay
+// comfortably under the 1,000 writes/day free-tier limit.
 // ---------------------------------------------------------------------------
 
 async function refreshAllStreams(env) {
